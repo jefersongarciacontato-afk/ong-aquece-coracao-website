@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seja um Voluntário - ONG Aquece Coração</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="Logo da ONG Aquece Coração" height="50">
+            </a>
+            <nav>
+                <button class="hamburger" id="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="sobre.html">Nossa História</a></li>
+                    <li><a href="projetos.html">Projetos</a></li>
+                    <li><a href="cadastro.html" class="active">Seja Voluntário</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col col-md-6 col-lg-6 mb-space-4-mobile">
+                    <img src="images/cadastro_voluntario.jpg" alt="Voluntários felizes em ação" class="img-responsive img-rounded">
+                </div>
+                <div class="col col-md-6 col-lg-6">
+                    <form id="cadastro-form" novalidate class="content-card">
+                        <legend class="content-title text-center">Junte-se ao Time</legend>
+                        <p class="form-description text-center">Preencha seus dados para se juntar à nossa causa.</p>
+                        
+                        <fieldset>
+                            <legend>Dados Pessoais</legend>
+                            <div class="form-group">
+                                <label for="nome">Nome Completo <span class="required-star">*</span></label>
+                                <input type="text" id="nome" name="nome" required minlength="3">
+                                <div class="error-message">Este campo é obrigatório (mínimo 3 caracteres).</div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">E-mail <span class="required-star">*</span></label>
+                                <input type="email" id="email" name="email" required>
+                                <div class="error-message">Por favor, insira um e-mail válido.</div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group form-col col-6">
+                                    <label for="cpf">CPF <span class="required-star">*</span></label>
+                                    <input type="text" id="cpf" name="cpf" required placeholder="000.000.000-00" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}">
+                                    <div class="error-message">CPF inválido.</div>
+                                </div>
+                                <div class="form-group form-col col-6">
+                                    <label for="telefone">Telefone / Celular <span class="required-star">*</span></label>
+                                    <input type="tel" id="telefone" name="telefone" required placeholder="(00) 00000-0000" pattern="\(\d{2}\) \d{5}-\d{4}">
+                                    <div class="error-message">Telefone inválido.</div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="nascimento">Data de Nascimento <span class="required-star">*</span></label>
+                                <input type="date" id="nascimento" name="nascimento" required>
+                                <div class="error-message">Data de nascimento obrigatória.</div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <legend>Endereço</legend>
+                            <div class="form-group">
+                                <label for="cep">CEP <span class="required-star">*</span></label>
+                                <input type="text" id="cep" name="cep" required placeholder="00000-000" pattern="\d{5}-\d{3}">
+                                <div class="error-message">CEP obrigatório.</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="endereco">Endereço (Rua, Nº, Bairro) <span class="required-star">*</span></label>
+                                <input type="text" id="endereco" name="endereco" required>
+                                <div class="error-message">Endereço obrigatório.</div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group form-col col-8">
+                                    <label for="cidade">Cidade <span class="required-star">*</span></label>
+                                    <input type="text" id="cidade" name="cidade" required>
+                                    <div class="error-message">Cidade obrigatória.</div>
+                                </div>
+                                <div class="form-group form-col col-4">
+                                    <label for="estado">Estado <span class="required-star">*</span></label>
+                                    <input type="text" id="estado" name="estado" required maxlength="2" pattern="[A-Za-z]{2}" placeholder="UF">
+                                    <div class="error-message">UF obrigatória.</div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        
+                        <button type="submit" class="btn btn-block">Enviar Cadastro</button>
+                    </form>
+                    <div id="form-message" class="alert"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 ONG Aquece Coração. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://unpkg.com/imask"></script>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>

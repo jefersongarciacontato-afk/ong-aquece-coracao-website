@@ -1,0 +1,135 @@
+// /js/main.js
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- LÓGICA DO MENU HAMBÚRGUER ---
+    // Esta parte funciona em todas as páginas
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('nav-links');
+
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+    }
+
+    // --- LÓGICA DO FORMULÁRIO DE CADASTRO ---
+    // Esta parte só vai rodar se encontrar o formulário (só na página cadastro.html)
+    const form = document.getElementById('cadastro-form');
+    
+    if (form) {
+        // --- APLICAÇÃO DAS MÁSCARAS (IMask.js) ---
+        const telMask = IMask(document.getElementById('telefone'), {
+            mask: '(00) 00000-0000'
+        });
+        const cpfMask = IMask(document.getElementById('cpf'), {
+            mask: '000.000.000-00'
+        });
+        const cepMask = IMask(document.getElementById('cep'), {
+            mask: '00000-000'
+        });
+
+        // Seleção de todos os campos obrigatórios
+        const formMessage = document.getElementById('form-message');
+        const requiredFields = form.querySelectorAll('[required]');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Previne o envio padrão
+
+            // Reseta estados anteriores
+            clearErrors();
+            formMessage.className = 'alert';
+            formMessage.textContent = '';
+
+            // Validação
+            let isValid = validateForm();
+
+            if (isValid) {
+                // Simula um envio bem-sucedido
+                const nomeInput = document.getElementById('nome');
+                // Pega o primeiro nome para a mensagem
+                const primeiroNome = nomeInput.value.split(' ')[0];
+                formMessage.textContent = `Obrigado, ${primeiroNome}! Seu cadastro foi recebido com sucesso.`;
+                formMessage.className = 'alert alert-success';
+                form.reset();
+                // Limpa as máscaras
+                telMask.updateValue('');
+                cpfMask.updateValue('');
+                cepMask.updateValue('');
+            } else {
+                formMessage.textContent = 'Por favor, corrija os campos marcados em vermelho.';
+                formMessage.className = 'alert alert-danger';
+            }
+        });
+
+        function validateForm() {
+            let valid = true;
+            
+            requiredFields.forEach(input => {
+                let inputValid = true;
+                
+                // 1. Validação genérica de "obrigatório"
+                if (input.value.trim() === '') {
+                    inputValid = false;
+                }
+                
+                // 2. Validação específica por tipo
+                if (inputValid) {
+                    const type = input.type;
+                    const id = input.id;
+                    const pattern = input.pattern;
+
+                    if (type === 'email' && !isValidEmail(input.value)) {
+                        inputValid = false;
+                    }
+                    if (pattern) {
+                        const regex = new RegExp('^' + pattern + '$');
+                        if (!regex.test(input.value)) {
+                            inputValid = false;
+                        }
+                    }
+                    // Validações de tamanho que o pattern já cobre, mas é bom reforçar
+                    if (id === 'cpf' && input.value.length < 14) { 
+                        inputValid = false;
+                    }
+                    if (id === 'telefone' && input.value.length < 15) { 
+                        inputValid = false;
+                    }
+                    if (id === 'cep' && input.value.length < 9) { 
+                        inputValid = false;
+                    }
+                }
+
+                // 3. Mostra o erro se for inválido
+                if (!inputValid) {
+                    showError(input);
+                    valid = false;
+                }
+            });
+
+            return valid;
+        }
+
+        function showError(input) {
+            input.classList.add('is-invalid');
+            const errorDiv = input.closest('.form-group').querySelector('.error-message');
+            if (errorDiv) {
+                errorDiv.style.display = 'block'; // Mostra a mensagem de erro
+            }
+        }
+
+        function clearErrors() {
+            const invalidInputs = form.querySelectorAll('.is-invalid');
+            invalidInputs.forEach(input => input.classList.remove('is-invalid'));
+            
+            const errorMessages = form.querySelectorAll('.error-message');
+            errorMessages.forEach(msg => msg.style.display = 'none'); // Esconde todas
+        }
+        
+        function isValidEmail(email) {
+            const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return regex.test(email.toLowerCase());
+        }
+    } // Fim do 'if (form)'
+});

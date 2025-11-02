@@ -1,0 +1,624 @@
+/* /css/style.css */
+
+/* ==========================================================================
+   1. DESIGN SYSTEM & BASE CONFIG
+   ========================================================================== */
+:root {
+    /* 1.1 Paleta de Cores (8 cores) */
+    --color-primary: #003b6d;       /* Azul Escuro (Principal) */
+    --color-primary-light: #005a9c;  /* Azul Médio (Hover/Links) */
+    --color-secondary: #007bff;      /* Azul Brilhante (Botões/Acentos) */
+    --color-accent: #ffc107;        /* Amarelo (Destaques/Tags) */
+    --color-light: #f8f9fa;         /* Cinza Muito Claro (Fundos) */
+    --color-dark: #343a40;          /* Cinza Escuro (Texto) */
+    --color-gray: #6c757d;          /* Cinza Médio (Texto Secundário) */
+    --color-white: #ffffff;         /* Branco */
+    --color-success: #28a745;       /* Verde (Sucesso) */
+    --color-danger: #dc3545;        /* Vermelho (Erro) */
+
+    /* 1.2 Tipografia Hierárquica (5+ tamanhos) */
+    --font-family-base: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-size-sm: 0.875rem; /* 14px */
+    --font-size-base: 1rem;     /* 16px */
+    --font-size-md: 1.25rem;  /* 20px */
+    --font-size-lg: 1.75rem;  /* 28px */
+    --font-size-xl: 2.25rem;  /* 36px */
+    --font-size-xxl: 3rem;   /* 48px */
+    --line-height-base: 1.6;
+    --line-height-heading: 1.2;
+
+    /* 1.3 Sistema de Espaçamento Modular (base 8px) */
+    --space-0-5: 0.25rem; /* 4px */
+    --space-1: 0.5rem;  /* 8px */
+    --space-2: 1rem;    /* 16px */
+    --space-3: 1.5rem;  /* 24px */
+    --space-4: 2rem;    /* 32px */
+    --space-5: 3rem;    /* 48px */
+    --space-6: 4rem;    /* 64px */
+    --space-7: 5rem;    /* 80px */
+    --space-8: 6rem;    /* 96px */
+}
+
+/* 1.4 Reset e Estilos Globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    line-height: var(--line-height-base);
+    min-height: 100vh; /* Para garantir que o footer fique sempre embaixo */
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1; /* Faz o main ocupar todo o espaço restante */
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--color-primary);
+    margin-bottom: var(--space-2);
+    line-height: var(--line-height-heading);
+}
+h1 { font-size: var(--font-size-xl); }
+h2 { font-size: var(--font-size-lg); }
+h3 { font-size: var(--font-size-md); }
+
+p {
+    margin-bottom: var(--space-2);
+}
+.lead-text {
+    font-size: var(--font-size-md);
+    font-weight: bold;
+    color: var(--color-primary-light);
+}
+.final-paragraph {
+    font-size: var(--font-size-md);
+    margin-top: var(--space-3);
+    font-weight: 500;
+}
+
+a {
+    color: var(--color-primary-light);
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+a:hover {
+    color: var(--color-secondary);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Remove espaço extra abaixo da imagem */
+}
+.img-responsive {
+    width: 100%;
+    height: auto;
+}
+.img-rounded {
+    border-radius: var(--space-1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.img-large-margin {
+    margin-bottom: var(--space-3);
+}
+
+/* Utilidades de Espaçamento e Alinhamento */
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.mb-space-3 { margin-bottom: var(--space-3); }
+.mb-space-4 { margin-bottom: var(--space-4); }
+.margin-top-space-4 { margin-top: var(--space-4); }
+
+/* Listas estilizadas */
+.styled-list {
+    list-style: none; /* Remove bullet padrão */
+    padding-left: 0;
+    margin-bottom: var(--space-3);
+}
+.styled-list li {
+    position: relative;
+    padding-left: var(--space-3);
+    margin-bottom: var(--space-1);
+}
+.styled-list li::before {
+    content: "✔️"; /* Ícone de checkmark */
+    position: absolute;
+    left: 0;
+    color: var(--color-success);
+    font-size: var(--font-size-base);
+}
+.stats-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: var(--space-3);
+}
+.stats-list li {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--space-2);
+    color: var(--color-primary);
+}
+.stats-list li strong {
+    color: var(--color-secondary);
+    font-size: var(--font-size-lg);
+    margin-right: var(--space-1);
+}
+
+
+/* ==========================================================================
+   2. LAYOUT & GRID SYSTEM
+   ========================================================================== */
+.container {
+    max-width: 1140px;
+    width: 90%;
+    margin: 0 auto;
+    padding: var(--space-5) 0; /* Aumentei o padding vertical */
+}
+
+/* Sistema de Grid de 12 colunas com Flexbox */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 calc(var(--space-2) * -1); /* Espaçamento negativo para compensar padding das cols */
+}
+
+.col {
+    padding: 0 var(--space-2);
+    width: 100%;
+}
+/* Classes de grid responsivo são definidas na Seção 5 */
+
+.align-items-center {
+    align-items: center;
+}
+.flex-wrap-reverse {
+    flex-wrap: wrap-reverse; /* Para inverter ordem em mobile */
+}
+
+/* ==========================================================================
+   3. NAVEGAÇÃO SOFISTICADA
+   ========================================================================== */
+.main-header {
+    background-color: var(--color-white);
+    padding: var(--space-2) 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.main-header .container {
+    padding: 0; /* Remove padding vertical do container no header */
+    width: 90%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 50px;
+    vertical-align: middle;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    position: relative;
+    padding: var(--space-2);
+}
+
+.nav-links a {
+    color: var(--color-dark);
+    font-weight: bold;
+    padding: var(--space-0-5) var(--space-1);
+    border-radius: var(--space-0-5);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-links a.active, .nav-links a:hover {
+    color: var(--color-secondary);
+    background-color: rgba(0, 123, 255, 0.1); /* Um leve background para hover */
+}
+.nav-links a.active {
+    color: var(--color-primary); /* Mantém o foco no ativo */
+    background-color: rgba(0, 59, 109, 0.05);
+}
+
+/* Dropdown */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: var(--color-white);
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    list-style: none;
+    top: 100%;
+    left: 0;
+    border-radius: var(--space-0-5);
+    overflow: hidden; /* Garante borda arredondada nos itens */
+}
+
+.dropdown-content li {
+    padding: 0;
+}
+
+.dropdown-content a {
+    color: var(--color-dark);
+    padding: var(--space-2);
+    display: block;
+    width: 100%;
+    font-weight: normal;
+    background-color: var(--color-white); /* Garante fundo branco para os itens */
+}
+.dropdown-content a:hover {
+    background-color: var(--color-light);
+    color: var(--color-primary);
+}
+
+
+/* Menu Hambúrguer */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: var(--space-1);
+}
+.hamburger .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: var(--color-primary);
+    transition: all 0.3s ease-in-out;
+}
+.hamburger.active .bar:nth-child(2) { opacity: 0; }
+.hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* ==========================================================================
+   4. COMPONENTES DE INTERFACE
+   ========================================================================== */
+/* Botões */
+.btn {
+    display: inline-block;
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    padding: var(--space-2) var(--space-3);
+    border: none;
+    border-radius: 5px;
+    font-size: var(--font-size-base);
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+.btn:hover {
+    background-color: var(--color-primary-light);
+    color: var(--color-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+.btn:focus {
+    outline: 2px solid var(--color-primary-light);
+    outline-offset: 2px;
+}
+.btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+.btn:disabled {
+    background-color: var(--color-gray);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+.btn-block {
+    display: block;
+    width: 100%;
+}
+.btn-hero {
+    font-size: var(--font-size-md);
+    padding: var(--space-3) var(--space-4);
+}
+
+/* Cartões (Cards) */
+.content-card {
+    background: var(--color-white);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    padding: var(--space-5);
+    margin-bottom: var(--space-4);
+    transition: box-shadow 0.3s ease;
+}
+.content-card:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+.content-title {
+    font-size: var(--font-size-lg);
+    text-align: center;
+    margin-bottom: var(--space-4);
+}
+.section-title {
+    font-size: var(--font-size-lg);
+}
+.section-subtitle {
+    font-size: var(--font-size-md);
+    color: var(--color-primary-light);
+    margin-top: var(--space-4);
+    margin-bottom: var(--space-2);
+}
+
+/* Emblemas e Tags */
+.tags {
+    margin: var(--space-3) 0;
+}
+.tag {
+    display: inline-block;
+    background-color: var(--color-accent);
+    color: var(--color-dark);
+    padding: var(--space-1) var(--space-2);
+    border-radius: 20px;
+    font-size: var(--font-size-sm);
+    font-weight: bold;
+    margin-right: var(--space-1);
+    margin-bottom: var(--space-1);
+}
+
+/* Alertas (Feedback do Formulário) */
+.alert {
+    padding: var(--space-2);
+    border-radius: 5px;
+    text-align: center;
+    margin-top: var(--space-3);
+    font-weight: bold;
+    display: none; /* Começa escondido */
+}
+.alert.alert-success {
+    background-color: #d4edda;
+    color: var(--color-success);
+    display: block;
+}
+.alert.alert-danger {
+    background-color: #f8d7da;
+    color: var(--color-danger);
+    display: block;
+}
+
+/* ==========================================================================
+   5. SEÇÕES ESPECÍFICAS (Hero, Footer, etc)
+   ========================================================================== */
+.hero-section {
+    background-image: linear-gradient(rgba(0, 59, 109, 0.7), rgba(0, 59, 109, 0.7)), url('../images/hero-background.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: var(--space-8) 0;
+    text-align: center;
+    color: var(--color-white);
+}
+.hero-section h1 {
+    font-size: var(--font-size-xxl);
+    color: var(--color-white);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: var(--space-3);
+}
+.hero-subtitle {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--space-4);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.section-cta {
+    background: var(--color-white);
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+    max-width: none; /* Faz a seção ocupar a largura total */
+}
+.section-cta .container {
+    padding: 0;
+    width: 90%;
+    max-width: 1140px;
+}
+
+/* Rodapé */
+.main-footer {
+    background-color: var(--color-dark);
+    color: var(--color-gray);
+    text-align: center;
+    padding: var(--space-4) 0;
+    margin-top: auto; /* Garante que o footer fique no fim da página */
+}
+
+/* Stats de Projeto */
+.project-stats-grid {
+    margin-top: var(--space-5);
+    margin-bottom: var(--space-3);
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: var(--space-4) 0;
+}
+.stat-item {
+    text-align: center;
+    margin-bottom: var(--space-3);
+}
+.stat-number {
+    font-size: var(--font-size-xl);
+    color: var(--color-secondary);
+    margin-bottom: var(--space-1);
+}
+.stat-description {
+    font-size: var(--font-size-base);
+    color: var(--color-gray);
+    margin-bottom: 0;
+}
+
+
+/* ==========================================================================
+   6. RESPONSIVIDADE (Breakpoints)
+   ========================================================================== */
+
+/* Telas muito pequenas (ex: smartphones antigos em modo retrato) */
+@media (max-width: 480px) {
+    h1 { font-size: 2rem; }
+    .hero-section h1 { font-size: var(--font-size-xl); }
+    .btn { width: 100%; }
+}
+
+/* Telas de Tablets e Smartphones (breakpoint para o menu hambúrguer) */
+@media (max-width: 767.98px) {
+    .nav-links {
+        position: absolute;
+        left: -100%; /* Esconde o menu fora da tela */
+        top: 82px; /* Altura do header (50px logo + 32px padding) */
+        flex-direction: column;
+        background-color: var(--color-white);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 4px 4px rgba(0,0,0,0.1);
+    }
+    .nav-links.active {
+        left: 0; /* Traz o menu para a tela */
+    }
+    .nav-links li {
+        border-bottom: 1px solid var(--color-light);
+    }
+    .dropdown:hover .dropdown-content {
+        display: none; /* Desativa dropdown no mobile */
+    }
+    .hamburger {
+        display: block;
+    }
+
+    .mb-space-4-mobile {
+        margin-bottom: var(--space-4);
+    }
+    .text-center-mobile {
+        text-align: center;
+    }
+}
+
+/* Telas de tablets maiores */
+@media (min-width: 768px) {
+    .col-md-4 { width: 33.3333%; }
+    .col-md-6 { width: 50%; }
+}
+
+/* Desktops médios */
+@media (min-width: 992px) {
+    .col-lg-4 { width: 33.3333%; }
+    .col-lg-6 { width: 50%; }
+    .col-lg-8 { width: 66.6666%; }
+}
+
+
+/* ==========================================================================
+   7. ESTILOS DE FORMULÁRIO AVANÇADO
+   ========================================================================== */
+
+fieldset {
+    border: 1px solid #ddd;
+    border-radius: var(--space-1);
+    padding: var(--space-3);
+    margin-bottom: var(--space-4);
+    padding-top: var(--space-2);
+}
+
+legend {
+    font-size: var(--font-size-md);
+    font-weight: bold;
+    color: var(--color-primary);
+    padding: 0 var(--space-1);
+    margin-left: var(--space-2);
+    width: auto; /* Corrige bug de layout do fieldset */
+}
+
+.form-description {
+    font-size: var(--font-size-base);
+    color: var(--color-gray);
+    margin-bottom: var(--space-4);
+}
+
+.required-star {
+    color: var(--color-danger);
+    font-weight: bold;
+    margin-left: 2px;
+}
+
+/* Layout em colunas para o formulário */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 calc(var(--space-2) * -1); /* Compensa o padding dos .form-col */
+}
+
+.form-group {
+    margin-bottom: var(--space-3);
+}
+.form-group label {
+    display: block;
+    margin-bottom: var(--space-1);
+    font-weight: bold;
+}
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: var(--space-2);
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: var(--font-size-base);
+}
+/* Validação Visual */
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+.form-group input.is-invalid,
+.form-group textarea.is-invalid {
+    border-color: var(--color-danger);
+    background-color: #fdd;
+}
+.form-group .error-message {
+    color: var(--color-danger);
+    font-size: var(--font-size-sm);
+    margin-top: var(--space-1);
+    display: none; /* Escondido por padrão */
+}
+/* .form-group input.is-invalid + .error-message - O JS cuida disso agora */
+
+
+.form-col {
+    padding: 0 var(--space-2);
+    flex: 1;
+    min-width: 150px; /* Garante que os campos não fiquem muito pequenos */
+}
+/* Define a proporção das colunas no form-row */
+.form-col.col-4 { flex-grow: 1; }
+.form-col.col-6 { flex-grow: 1; }
+.form-col.col-8 { flex-grow: 2; }
+
+/* Garante que em telas pequenas, as colunas fiquem uma abaixo da outra */
+@media (max-width: 576px) {
+    .form-row {
+        flex-direction: column;
+        margin: 0;
+    }
+    .form-col {
+        padding: 0;
+        width: 100%;
+    }
+}
