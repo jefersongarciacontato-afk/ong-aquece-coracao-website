@@ -1,4 +1,4 @@
-![Logo da ONG Aquece Coração](images/logo.png)
+![Logo da ONG Aquece Coração](images/logotipo.png)
 
 # ONG Aquece Coração - Plataforma Web
 
